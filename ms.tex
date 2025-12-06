@@ -6,41 +6,29 @@
 
 % --- CORE FONT SETUP (Sans-Serif Headings) ---
 \usepackage{fontspec}        
-% Use Path=fonts/ to look inside the fonts folder
-\setmainfont{FiraSans.ttf}[
-    Path = fonts/,
-    UprightFont = *-Regular,
-    BoldFont = *-Bold,
-    ItalicFont = *-Italic,
-    BoldItalicFont = *-BoldItalic,
-    Extension = .ttf
+
+% Use Path=fonts/ to look inside the fonts folder, use Fira Sans for headings
+\newfontfamily{\sansheadings}{FiraSans.ttf}[
+  Path = fonts/,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic,
+  Extension = .ttf
 ]
-\newfontfamily{\sansheadings}{Fira Sans}
 \usepackage{sectsty}
 \sectionfont{\sansheadings \raggedright \Large}
 \subsectionfont{\sansheadings \raggedright \large}
 \subsubsectionfont{\sansheadings \raggedright \normalsize}
 
-\usepackage{unicode-math}    
-%
-%% 1. Main Text: Set to Latin Modern Roman (Stable, Professional Serif)
-%\setmainfont{Latin Modern Roman} 
-%
-% 2. Monospaced/Code Text: Fira Mono
-%\setmonofont{Fira Mono} 
-%
-%% 3. Mathematical Notation: Latin Modern Math (Stable, Conventional Serif Math)
-%\setmathfont{Latin Modern Math} 
+% Main Text: Set to Latin Modern Roman (Stable, Professional Serif)
+% \setmainfont{Latin Modern Roman} 
 
-% 4. Heading Font Setup (Fira Sans)
+% Mathematical Notation: Latin Modern Math (Stable, Conventional Serif Math)
+\usepackage{unicode-math}    
+% \setmathfont{Latin Modern Math} 
  
-% \usepackage{sectsty}
-% \sectionfont{\sansheadings \raggedright \Large}
-% \subsectionfont{\sansheadings \raggedright \large}
-% \subsubsectionfont{\sansheadings \raggedright \normalsize}
-% Ensure your title command uses \sansheadings as defined in the previous step.
-% ...
- 
+
 % --- ESSENTIAL PACKAGES ---
 
 % 2. Core Text Utilities and Geometry

@@ -84,7 +84,7 @@
 
 % --- HYPERREF SETUP (From ms.tex) ---
 \hypersetup{
-  pdftitle={Group polarization replications may be marred by high false discovery rates},
+  pdftitle={Null Fits? Must Omit! Measurement Artifacts Undermine Group Polarization Replications},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -111,7 +111,7 @@
 
 % --- TITLE AND AUTHOR INFO (From ms.tex) ---
 \makeatletter
-\title{\Large The Null Fits? Omit! Measurement Artifacts Undermine Group Polarization Replications}
+\title{\Large Null Fits? Must Omit! Measurement Artifacts Undermine Group Polarization Replications}
 \makeatother
 \author[1,*]{{Matthew A.~Turner}}
 \affil[1]{\small Environmental Social Sciences, Stanford Doerr School of Sustainability, Stanford University}
@@ -307,7 +307,7 @@ Information about our corpus is summarized below with references
 (Table~\ref{tab:articles}).  
 
 \begin{center}
-[ TABLE \ref{tbl:articles} ABOUT HERE ]
+[ TABLE \ref{tab:articles} ABOUT HERE ]
 \end{center}
 
 Each study used subtly different experimental methods that make it difficult
@@ -472,7 +472,7 @@ distorts null-polarization to look like group polarization.
 
 
 \begin{center}
-[  TABLE~\ref{eq:latent-variables} ABOUT HERE  ]
+[  TABLE~\ref{tab:latent-variables} ABOUT HERE  ]
 \end{center}
 
 \subsection{Two Models of Group Polarization
@@ -827,37 +827,8 @@ Following convention, we adopt a fixed Statistical Power of \(W=0.80\)
 (and test sensitivity with alternative values) and a Base Rate of
 \(b=0.10\). 
 
-\begin{table}[htp]
 
-    \caption{\textbf{Statistical Error Rates and Units of Analysis}}
-    \begin{center}	
-    
-    \begin{tabular}{llcp{2.15in}}
-      \toprule
-      %-----  
-      \textbf{Unit of Analysis} & \textbf{Type} & \textbf{Notation} & \textbf{Definition} \\
-      \midrule
-      %-----
-      Experiment, \(e\) 
-        & Type I & \(\alpha_e\) 
-        & Rate of false rejections of $e$'s null hypothesis \\
-
-      All experiments in one study, \(s\) 
-        & Family-Wise 
-        & \(\alpha_s\) 
-        & Mean Type I Error Rate across all conditions in study, $s$. \\
-
-      All experiments across studies & Family-Wise & \(\alpha_{\mathrm{All}}\) &
-        The mean Type I Error Rate for conditions with plausibly spurious results \\
-
-      %-----
-      \bottomrule
-    \end{tabular}
-
-    \end{center}
-    \label{tab:error-rate-outcomes}
-\end{table}%
-
+{\centering [  TABLE~\ref{tab:error-rate-outcomes} ABOUT HERE  ] }
 
 \subsubsection{Generative Model of Spurious Group
 Polarization}\label{generative-model-of-spurious-group-polarization}
@@ -893,12 +864,23 @@ This results in a simulated dataset of \(2N_e\) rows (two time steps per
 participant) for a single trial, consisting of ordinal opinion values
 that are then passed to the statistical inference pipeline.
 
-\subsubsection{Inference of Simulated Type I Error}\label{statistical-inference-pipeline}
 
-We infer that 
+\subsubsection{Erroneous Inference of Polarization in Mere Agreement Models}
+\label{erroneous-inference-model}
+
+The group polarization effect can be measured in terms of the 
+Cohen's $d$ measure of effect size,
+\begin{equation}
+  d = \frac{\mupost - \mupre}{\sqrt{(\sigmapost^2 + \sigmapre^2)}}.
+\end{equation}
+\noindent
+In other words we infer that a Type I error occurs in our mere agreement 
+simulations if an \emph{ordered probit regression}, fit using Bayesian
+inference, predicts that their means differ more than some \emph{effect
+threshold}, denoted $d^*$. Therefore we say an effect is detected 
 
 
-\subsubsection{False positive rate}\label{false-positive-rate}
+\subsubsection{Type I and Family-wise Error Rates}\label{false-positive-rate}
 
 To calculate the false detection rate we begin by simulating pre- and
 post-deliberation opinions by drawing \(N_e\) samples from normal latent
@@ -1082,13 +1064,6 @@ false detection rate of 0.52 for the Myers (1975) condition, a maximum false
 detection rate of 0.88 for the Schkade, et al., (2010) condition, and a median false
 detection rate of 0.75 for the Krizan and Baron (2007) condition. 
 
-\begin{table}[ht]
-  \caption{{\textbf{Quantiles for the two error-rate measures under different
-  significance values.}}}
-  \label{tab:quantiles}
-  \centering
-  \input{tex/quantile_table_min_20_50_80_max.tex}
-\end{table}
 
 In the conditions
 with lower family-wise error rates, there were several conditions where using the low 
@@ -1128,7 +1103,9 @@ Solving the inverse problem of which $d^*$ achieves a low family-wise error rate
 which drives the false detection rate. Here we present our calculations to find
 $d^*$ that achieve $\alpha(d^*) = 0.05$. 
 
-{\centering [  FIGURE~\ref{fig:sigval_for_low_fwer} ABOUT HERE  ] }
+\begin{center}
+  [  FIGURE~\ref{fig:sigval_for_low_fwer} ABOUT HERE  ] 
+\end{center}
 
 
 

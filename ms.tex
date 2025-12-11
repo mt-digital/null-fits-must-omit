@@ -105,7 +105,9 @@
 \newcommand{\meanobspre}{\meanobs_\mathrm{pre}}
 \newcommand{\meanobspost}{\meanobs_\mathrm{post}}
 \newcommand{\tpre}{t_\mathrm{pre}}
-\newcommand{\tpost}{t_\mathrm{yopost}}
+\newcommand{\tpost}{t_\mathrm{post}}
+\newcommand{\nullmodel}{\mathcal{M}_0}
+
 \definecolor{myorange}{RGB}{240, 96, 0}
 \newcommand{\mt}[1]{{\textcolor{myorange} {({\tiny MT:} #1)}}}
 
@@ -520,7 +522,7 @@ model; second, the \emph{Evaluation} stage that uses the
 Replications}{Part 1: Identify Invalid Replications}}\label{part-1-identify-invalid-replications}
 
 In the first stage of our analysis, we try to \emph{identify} a null
-polarization models, \(\nu\), that invalidate published detections of
+polarization models, $\nullmodel$, that invalidate published detections of
 group polarization if the measurement procedure induces \emph{spurious
 group polarization} for that null polarization model. Null polarization
 can take many forms---all that is required is that the latent mean
@@ -539,7 +541,7 @@ mean and pre- and post-discussion opinion variances generate spurious
 group polarization, if there are any.
 
 Our invalidation strategy, then, is to find a mere agreement null
-polarization model, \(\nu\), that predicts the exact observations
+polarization model, \(\nullmodel\), that predicts the exact observations
 reported in each experimental replication in our corpus. If one is
 found, then we have found a model consistent with the \emph{negation} of
 the group polarization hypothesis that explains the data as well as the
@@ -550,18 +552,18 @@ potential measurement artifacts. Because the experiment failed to
 produce a valid replication, the results are effectively stripped of
 evidentiary value and warrant exclusion from the aggregate evidence
 base. We apply our analysis to every experimental condition across all
-ten journal articles in our corpus, which we label \(e\). But how do we find a \(\nu\) that generates spurious group polarization?
+ten journal articles in our corpus, which we label \(e\). But how do we find a \(\nullmodel\) that generates spurious group polarization?
 And how do we even simulate the group polarization experiments and
 measurements that make mere agreement in latent opinions look like group
 polarization? 
 
 We simulate experimental measurements of group
 polarization by using the mathematical \emph{expectation value} of
-latent opinions defined by \(\nu\) as a proxy for the observed average
+latent opinions defined by \(\nullmodel\) as a proxy for the observed average
 value of ordinal-valued reported opinions (described in the first
 subsection below). We then use this measurement model in a numerical
-root-finding algorithm that identifies a \(\nu\) that matches published
-observations, if possible. If we find such a \(\nu\), this means we have
+root-finding algorithm that identifies a \(\nullmodel\) that matches published
+observations, if possible. If we find such a \(\nullmodel\), this means we have
 a model consistent with the null hypothesis that explains published
 observations. In other words, the replication is invalidated since the
 group polarization hypothesis is \emph{undecidable} given the
@@ -628,26 +630,26 @@ density function of observed ordinal opinions. In other words, we
 simulate \(\bar{o}_t\) by calculating the weighted sum of products
 between the probability of observing each bin value and the bin value
 itself: \begin{equation}\phantomsection\label{eq-sim-ave-observed}{
-\bar{o}_t(\nu, e) = \sum_{i=1}^B b_i f_{it}(\nu, e).
+\bar{o}_t(\nullmodel, e) = \sum_{i=1}^B b_i f_{it}(\nullmodel, e).
 }\end{equation}
 
 Group polarization is the difference between the post-deliberation mean
 observed opinion and the pre-deliberation one. We will calculate the
 magnitude of spurious group polarization under a mere agreement null
 model represented by its collected distribution parameters,
-\(\nu = (\mu, \sigma_\mathrm{pre}, \sigma_\mathrm{post})\), under
+\(\nullmodel = (\mu, \sigma_\mathrm{pre}, \sigma_\mathrm{post})\), under
 experimental design, \(e\):
 \begin{equation}\phantomsection\label{eq-spurious-gp}{
-g(\nu, e) = |\bar{o}_\mathrm{post}(\nu, e)| - |\bar{o}_\mathrm{pre}(\nu, e)|
+g(\nullmodel, e) = |\bar{o}_\mathrm{post}(\nullmodel, e)| - |\bar{o}_\mathrm{pre}(\nullmodel, e)|
 }\end{equation}
 
 In the \emph{Inspect} stage of our analysis we will determine which
 group polarization replications are invalidated due to equifinality
 between the \emph{mere agreement null-polarization hypothesis} on the
 one hand, and the \emph{group polarization hypothesis} on the other.
-This requires more than just showing there is some \(\nu\) that causes
-spurious polarization for some experiment where \(g(\nu, e) > 0\). We
-have to find a \(\nu\) that generates the exact \(g(\nu, e)\) reported
+This requires more than just showing there is some \(\nullmodel\) that causes
+spurious polarization for some experiment where \(g(\nullmodel, e) > 0\). We
+have to find a \(\nullmodel\) that generates the exact \(g(\nullmodel, e)\) reported
 in the original journal article \emph{and} check that simulated
 \(\bar{o}_\mathrm{pre}\) and \(\bar{o}_\mathrm{pre}\) match published
 values.
@@ -677,14 +679,14 @@ Moscovici and Zavalloni say their results confirm the basic hypothesis,
 that \emph{group discussion causes polarization}. But we found a mere
 agreement null-polarization model that generates spurious group
 polarization using our model---specifically,
-\(\nu = (\mu = -1.2, \sigma_\mathrm{pre}= 4.3, and \sigma_\mathrm{post}= 1.9)\).
+\(\nullmodel = (\mu = -1.2, \sigma_\mathrm{pre}= 4.3, and \sigma_\mathrm{post}= 1.9)\).
 This means that the hypothesis is actually undecidable given the data,
 invalidating Moscovici and Zavalloni's replication. When a hypothesis
 and its null explain data equally well, the data tell us nothing.
 
-Now let's use the expectation model to prove that this \(\nu\) generates
+Now let's use the expectation model to prove that this \(\nullmodel\) generates
 spurious group polarization in this experiment, i.e.,
-\(g(\nu, e= \mathrm{Moscovici1969\_Americans}) > 0\). In the process we
+\(g(\nullmodel, e= \mathrm{Moscovici1969\_Americans}) > 0\). In the process we
 demonstrate how the expectation model works to simulate the measurement
 of spurious group polarization (Equation~\ref{eq-spurious-gp}).
 
@@ -716,7 +718,7 @@ into the simulated average pre-discussion opinion definition
 null-polarization model appears polarized, with the exact same average
 pre- and post-discussion opinions reported by Moscovici and Zavalloni
 (1969), and the same magnitude of radicalization: \[
-g(\nu, e) = \bar{o}_\mathrm{post} - \bar{o}_\mathrm{pre} = -1.04 - (-0.6) = - 0.4.
+g(\nullmodel, e) = \bar{o}_\mathrm{post} - \bar{o}_\mathrm{pre} = -1.04 - (-0.6) = - 0.4.
 \]
 
 \begin{center}
@@ -745,7 +747,7 @@ the spurious polarization.
 
 \subsubsection{System for identifying invalid replications}\label{system-for-identifying-invalid-replications}
 
-We now demonstrate how to scale up and automate the analysis we did manually for just one experimental condition in the example above. The foundation of this step is an algorithm that starts from an initial user-provided guess at a mere agreement model $\nu$ that will generate spurious group polarization that matches the same average pre- and post-discussion opinions as reported in the original article.
+We now demonstrate how to scale up and automate the analysis we did manually for just one experimental condition in the example above. The foundation of this step is an algorithm that starts from an initial user-provided guess at a mere agreement model $\nullmodel$ that will generate spurious group polarization that matches the same average pre- and post-discussion opinions as reported in the original article.
 
 \begin{algorithm}
   \caption{Routine to find latent mean and variance that generate spurious group polarization.}
@@ -827,15 +829,16 @@ Following convention, we adopt a fixed Statistical Power of \(W=0.80\)
 (and test sensitivity with alternative values) and a Base Rate of
 \(b=0.10\). 
 
-
-{\centering [  TABLE~\ref{tab:error-rate-outcomes} ABOUT HERE  ] }
+\begin{center}
+  [ TABLE~\ref{tab:error-rate-outcomes} ABOUT HERE ]
+\end{center}
 
 \subsubsection{Generative Model of Spurious Group
 Polarization}\label{generative-model-of-spurious-group-polarization}
 
 To evaluate an experimental design's ability to properly identify null
 effects, we need to simulate participant responses assuming the mere
-agreement null model that invalidated the replication (\(\nu_e\)). We
+agreement null model that invalidated the replication (\(\nullmodel^e\)). We
 use the stochastic model for this simulation stage, as it correctly
 models the noise inherent in individual participant measurement and
 response. The ordinal, measured opinions are generated by executing the
@@ -848,7 +851,7 @@ independent trials:
   \textbf{Latent Opinion Sampling:} For each participant \(i\) and time
   \(t \in \{\text{pre, post}\}\), we draw a continuous latent opinion
   \(\omega_{i,t}\) from the corresponding normal distribution defined by
-  the null model \(\nu_e\) (Equation~\ref{eq:normal-opinion-distribution}).
+  the null model \(\nullmodel^e\) (Equation~\ref{eq:normal-opinion-distribution}).
 \item
   \textbf{Measurement Simulation (Ordinal Binning):} Each continuous
   latent opinion \(\omega_{i,t}\) is mapped onto the experiment's
@@ -887,7 +890,7 @@ post-deliberation opinions by drawing \(N_e\) samples from normal latent
 opinion distributions that generated spurious group polarization, i.e.,
 one sample at each experiment stage for each simulated participant. The
 latent opinion distributions are specified with the mere agreement null
-model labelled \(\nu_e\).
+model labelled \(\nullmodel^e\).
 
 The family-wise error rate is the fraction of trials with
 \(d_{ei} > d^*\), written
@@ -948,7 +951,7 @@ limit the false positive rate to a desired maximum, such as \(5\%\) (or
 \(\alpha = 0.05\)).
 
 We leverage the evaluation framework developed in Part 2, based on the
-mere agreement null model \(\nu_e\) identified for each experimental
+mere agreement null model \(\nullmodel^e\) identified for each experimental
 condition \(e\). Our objective is to calculate the function
 \(\alpha_e(d^*)\) across a sufficient range of \(d^*\) values. This
 allows us to determine the lowest \(d^*\) that satisfies the design
@@ -1005,15 +1008,15 @@ for ``significant'' Cohen's $d$ to limit the family-wise error rate to 5\%.
 % We used our formal distribution model of group polarization experiments
 % to identify plausible latent simple consensus distributions that generate spurious
 % group polarization in 
-Of the remaining 57, we identified simple consensus $\nu$ that generate spurious
+Of the remaining 57, we identified simple consensus $\nullmodel$ that generate spurious
 group polarization in 54 experimental conditions. In the other three, we did
-identify $\nu$ that generate spurious group polarization, but the initial
+identify $\nullmodel$ that generate spurious group polarization, but the initial
 simulated distributions were highly polarized. 
-We rejected $\nu$ generated for
+We rejected $\nullmodel$ generated for
 two spurious group polarization from Schkade, et al., (2010) because
 the histogram plots of the observed opinion distributions are not
 polarized~\cite[Figure 1, p. 234]{Schkade2010}. The other condition where we
-found but rejected spurious group polarization $\nu$ was in a question 
+found but rejected spurious group polarization $\nullmodel$ was in a question 
 about a ``bad teacher'' in Myers (1975)~\cite{Myers1975a}, where lower values
 signify increasingly worse impressions of the teacher and higher values signify
 increasingly good impressions. It is unlikely that a
@@ -1253,15 +1256,16 @@ Where $\hat{\theta}$ represents the \textbf{posterior mean} of the parameter $\t
 
 While this approach is a statistical shortcut, the error is mitigated by two factors: the use of the $d^*_{\text{threshold}}$ heuristic, and the large simulated sample size ($N=500$ per group), which ensures that the posteriors for $\mu$ and $\sigma$ are sufficiently narrow. This minimizes the difference between $d_{\text{plug}}$ and the true posterior median $\tilde{d}$, making the shortcut defensible as a pragmatic necessity given the study's scale.
 
-\subsection{Humble Hearts Promote Rigorous Science}
-
-Cass Sunstein kicked off the 2000s by elevating group polarization to be a scientific law and advocating the application of group polarization research to serious real-world problems in two books (Sunstein, 2009; Sunstein, 2019) and two recent high-profile articles in Nature Human Behavior: one on the social foundations of pandemic preparedness (Van Bavel, et al., 2020) and one to “promote truth, autonomy, and democratic discourse online” (Lorenz-Spreen, Lewandowski, Sunstein, and Hertwig, 2020). Let us try to stop the spread of this bad science—and let us explore what must be done to achieve Dorian Cartwright’s vision of a rigorous science of group polarization he articulated fifty years ago.
+\subsection{Humility is a Prerequisite for Rigorous Science}
 
 To be practically useful, science must be rigorous. Rigorous science comes most naturally when scientists remain humble, especially when they serve at the pleasure of the public, the government, or other donors. Here’s another example from Burnstein and Vinokur (1973) that we can learn from—let’s try to avoid the sort of arrogance and haughtiness that seep from these acknowledgements they wrote on p. 123:
 
 \begin{quote}
 This research was supported by a Grant from the National Institute of Mental Health (MH-16950-03) and by a Guggenheim Foundation Fellowship awarded to the first author. We gratefully acknowledge the incisive, witty, and vinous commentary provided by colleagues at the University of Provence, in particular Robert Abelson, Claude Flament, and Jean-Pierre Poitou, as well as the spirited and intelligent efforts of Livia Mezrick and Irene Graczyk, who helped us carry out the study.
 \end{quote}
+
+Cass Sunstein kicked off the 2000s by elevating group polarization to be a scientific law and advocating the application of group polarization research to serious real-world problems in two books (Sunstein, 2009; Sunstein, 2019) and two recent high-profile articles in Nature Human Behavior: one on the social foundations of pandemic preparedness (Van Bavel, et al., 2020) and one to “promote truth, autonomy, and democratic discourse online” (Lorenz-Spreen, Lewandowski, Sunstein, and Hertwig, 2020). Let us try to stop the spread of this bad science—and let us explore what must be done to achieve Dorian Cartwright’s vision of a rigorous science of group polarization he articulated fifty years ago.
+
 
 Science is not glamorous—it takes guts and sacrifice to achieve the technical skills and discipline to sharpen one’s prose, methods, mathematics, and computer code to the point they can really cut reality at its joints, investigate different parts, then put it all back together with a message for others about how the world really works. These days, to do rigorous social science work one must wisely curate the best of the available social science by harmonizing cross-disciplinary jargon. But disincentives still exist against careful scholarship. Prizes and professorships go to those with the most numerous publications in the right journals—period.
 

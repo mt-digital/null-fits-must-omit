@@ -253,7 +253,6 @@ that share the exact same causal structure as expressed in a formal or
 mechanistic causal model~\cite{Cartwright1999}.
 
 
-
 \subsection{Group polarization research}
 
 Group polarization research began in the 1960s, which grew rapidly with
@@ -431,6 +430,7 @@ time $t$ as a normally-distributed random variable,
     \mathcal{N}(\mu_t, \sigma_t),
 }
 \end{equation} 
+\noindent
 with mean $\mu_t$ and standard deviation $\sigma_t$.
 Group polarization in terms of latent opinions is then defined as any
 pair of pre- and post-discussion opinion distributions where the mean
@@ -926,7 +926,7 @@ we calculate type I and family-wise error rates, explained next.
 \subsubsection{Type I and Family-wise Error Rates}\label{false-positive-rate}
 
 To calculate the false detection rate we begin by simulating pre- and
-post-deliberation opinions by drawing $N_e$ samples from normal latent
+post-deliberation opinions by drawing $N_e$ samples from normal latenthttps://mt-digital.github.io/Quant-Social-Science-4-Sustainability/
 opinion distributions that generated spurious group polarization, i.e.,
 one sample at each experiment stage for each simulated participant. The
 latent opinion distributions are specified with the mere agreement null
@@ -973,75 +973,72 @@ $\alpha \leq 0.05$ as an example.
 \subsubsection{False discovery rate}\label{false-discovery-rate}
 
 The false discovery rate is the false positive rate, scaled by the rate
-of true negative effects and normalized by the frequency of true
-positive effects (Equation~\ref{eq-fdr}) and assuming
-empirically-motivated values for base rate, $b$, and statistical
-power, $W$, as well as more pessimistic and optimistic settings for
-base rate and power. Using this notation, the false detection rate is
+of true negative effects and normalized by the probability of detecting an effect,
+true or false (Equation~\ref{eq:fdr}).  
+The rate of true negative effects is the complement of thehttps://mt-digital.github.io/Quant-Social-Science-4-Sustainability/
+\emph{base rate of true effects}, $b$, i.e., the probability that an effect occurs
+in response to an experimental manipulation—of course this is only possible to know
+\emph{in silico}.  In our case, $b$ measures how frequently group discussion leads to
+polarization in identical experimental contexts, or at least sufficiently similar to
+warrant evaluating them together. The probability of detecting an effect, assuming one
+occured, is the \emph{power}, $W$. 
 
-\begin{equation}\phantomsection\label{eq-fdr}{
-\mathrm{FDR}= \frac{(1 - b)\alpha}{(1 - b)\alpha + bW}.
-}\end{equation}
+With this notation, the false detection rate is
+\begin{equation}
+  \mathrm{FDR}= \frac{(1 - b)\alpha}{(1 - b)\alpha + bW}.
+  \label{eq:fdr}
+\end{equation}
+\noindent
+In the numerator, we have the product of the probability of a null effect—the 
+complement of the base rate, $1-b$—times the false positive rate, $\alpha$,
+the probability that a test will detect an effect when there was none.
+But we have to normalize this by summing over all detections of group polarization,
+including the valid ones: the fraction of results that validly detect an effect is the
+product of probability that an effect occurs, $b$, times the probability that
+the effect is accurately detected, $W$. Therefore the total probability of 
+observing a positive effect is the sum of the probability of observing a false positive
+plus the probability of observing a true positive, i.e., $(1-b)\alpha + bW$.
 
-\subsection{\texorpdfstring{Part 3: \emph{Specify} Significance Threshold
-for Experimental
-Design}{Part 3: Specify Significance Threshold for Experimental Design}}\label{part-3-specify-significance-threshold-for-experimental-design}
+\subsection{Part 3: Specify Significance Threshold for Experimental Design}
 
-In the final stage of our analysis, we pivot from evaluating the outcome
-of published designs to \emph{specifying the statistical requirements
-for future designs}. The primary goal of this specification is to invert
-the standard question of statistical rigor: instead of asking if an
-effect is `significant' given a fixed effect-size threshold (e.g.,
-$d^{*} = 0.5$), we ask what significance threshold is necessary to
-limit the false positive rate to a desired maximum, such as $5\%$ (or
-$\alpha = 0.05$).
+In the final stage of our analysis, we pivot from evaluating the survey methods and
+outcomes of published designs to \emph{specifying} design requirements
+for future experiments. Here we make concrete
+the standard question of statistical rigor: instead of debating which
+effect-size threshold is large enough to be confident an effect has occured, 
+we \emph{calculate} what threshold is necessary to
+limit the false positive rate to a target maximum, such as $5\%$, which we
+write $\alpha_\tau = 0.05$. Our method works the same in a null-hypothesis significance
+testing approach: the only change would be to find a $p$-value that limits
+the probability of false detections of \emph{significance} to not be greater
+than $\alpha_\tau$.
 
 We leverage the evaluation framework developed in Part 2, based on the
 mere agreement null model $\nullmodel^e$ identified for each experimental
-condition $e$. Our objective is to calculate the function
-$\alpha_e(d^*)$ across a sufficient range of $d^*$ values. This
-allows us to determine the lowest $d^*$ that satisfies the design
-requirement $\alpha_e(d^*) \leq 0.05$.
-
+condition $e$. Our objective is to find 
 \begin{equation}
-  d^* = \min~d,~~\text{subject to}
-    \Pr\!\left( \hat{d} \ge d \mid \mathcal{M}_{0} \right)  \le \alpha^*.
+  d^*_e = \min~d,~~\text{subject to}
+    \Pr\!\left( \hat{d} \ge d \mid \nullmodel^e \right)  \le \alpha_\tau.
   \label{eq:threshold-spec}
 \end{equation}
+\noindent
+We calculate the probability on the right hand side as the observed frequency of
+detections of the group polarization effect in simulated data, generated 
+using the mere agreement model found to identify invalid replications.
+To do this we calculate the rate of false detections of group polarization under an
+experiment $e$. We create simulated null polarization
+datasets by the same method as explained above, 
+with pre- and post-discussion latent opinion distributions
+parameterized by the mere agreement model found to invalidate the replication under $e$. 
+We test candidate thresholds from $d=0.5$ to $d=3.0$ in steps of 0.01 so that
+we can calculate $d^*_e$ to two decimal places (Equation~\ref{eq:threshold-spec}).
 
-% The function $\alpha_e(d^*)$ is the simulated false positive rate as a
-% function of the significance threshold, $d^*$, defined as: \[
-% \alpha_e(d^*) = \frac{1}{N_T} \sum_i^{N_T} \Theta(d_{ei}; d^*),
-% \] where $N_T$ is the number of null trials, $d_{ei}$ is the
-% calculated effect size for trial $i$, and $\Theta$ is the indicator
-% function that flags trials where the effect size $d_{ei}$ exceeds the
-% significance threshold $d^*$. In the interest of giving the most
-% generous best-case scenario possible, we only count positive effect
-% sizes because only these indicate increased extremism over time.
-% Negative effect sizes indicate group opinions became more
-% moderate---such observations do not support the group polarization
-% hypothesis that opinions become more extreme following discussion.
 
-% Because our system is automated, and the code publicly available, it can
-% be adapted and used to design future group polarization experiments with
-% empirically-grounded statistical rigor. Experimenters can specify a
-% desired maximum false positive rate, such as $\alpha = 0.05$, and our
-% system will calculate the minimum effect size threshold $d^*$ that
-% must be exceeded to achieve that level of rigor under the mere agreement
-% null model identified for their experimental design. This prescriptive
-% step transforms the simulation from a post-hoc critique into a
-% forward-looking design tool, giving experimenters an empirically-derived
-% minimum effect size they must exceed to maintain statistical confidence
-% in their results.
-
-\subsection{Analysis Outline and Summary}
+\subsection{Analysis Outline}
 
 
 
 
-
-% \input{analysis.tex}
-% \input{discussion.tex}
 
 \section{Analysis}\label{analysis}
 

@@ -685,8 +685,13 @@ discussion to -1.6 after, on a seven-bin scale from -3 indicating
 Moscovici and Zavalloni say their results confirm the basic hypothesis,
 that \emph{group discussion causes polarization}. But we found a mere
 agreement null-polarization model that generates spurious group
-polarization using our model---specifically,
-$\nullmodel = (\mu = -1.2, \sigma_\mathrm{pre}= 4.3, and \sigma_\mathrm{post}= 1.9)$.
+polarization using our model—specifically,
+\begin{equation}
+  \nullmodel^{e=\text{Mosc1969\_Amer}} = 
+    (\mu = -1.2,~\sigma_\mathrm{pre}= 4.3,~\sigma_\mathrm{post}= 1.9).
+  \label{eq:Moscovici1969_Americans_Null}
+\end{equation}
+\noindent
 This means that the hypothesis is actually undecidable given the data,
 invalidating Moscovici and Zavalloni's replication. When a hypothesis
 and its null explain data equally well, the data tell us nothing.
@@ -750,11 +755,31 @@ the spurious polarization.
 [  FIGURE~\ref{fig:computational-system} ABOUT HERE  ]
 \end{center}
 
+Up to now we developed the infrastructure to model the measurement of the
+mean opinion of a group for one point in time. We used our system to show that
+We used the general framework that simulates how a 
+spurious effect can be detected due to measurement clipping, a measurement
+artifact that obscures opinion changes when the pre- and post-discussion opinions 
+both have different latent values, but map to the same extreme ordinal opinion value.
 
+But how did we know what parameter values for the mere agreement null 
+model would work? How did we go about searching for such null models for each
+of the 57 experimental conditions in our corpus? In the next section we introduce our
+system that helps us automate the identification of these parameters based on 
+an initial user guess, then adds these results to our research dataset. We used it to
+find the null model specified in Equation~\ref{eq:Moscovici1969_Americans_Null}.
 
 \subsubsection{System for identifying invalid replications}\label{system-for-identifying-invalid-replications}
 
-We now demonstrate how to scale up and automate the analysis we did manually for just one experimental condition in the example above. The foundation of this step is an algorithm that starts from an initial user-provided guess at a mere agreement model $\nullmodel$ that will generate spurious group polarization that matches the same average pre- and post-discussion opinions as reported in the original article.
+%%%%%%%% NEXT THING TO TACKLE — note written 12/13/2025
+%
+% edited the above to flow more smoothly to here, ready to explain the system where
+% user gives a guess, root finding solves the equation using the mu we give it, then
+% searching in \mupre, \mupost space. 
+% 
+%%%%%%
+
+To automate the analysis to be able to  we did manually for just one experimental condition in the example above. The foundation of this step is an algorithm that starts from an initial user-provided guess at a mere agreement model $\nullmodel$ that will generate spurious group polarization that matches the same average pre- and post-discussion opinions as reported in the original article.
 
 \begin{algorithm}
   \caption{Routine to find latent mean and variance that generate spurious group polarization.}
@@ -895,8 +920,8 @@ and variance for each trial, which we then plug in to calculate $d_{ei}$
 using Equation~\ref{eq:cohens-d} \cite{Liddell2018}. Ordered
 probit inference is based on the \emph{cumulative normal} distribution, which
 assumes that distributions of ordinal data are defined by integrating an underlying
-normal distribution over a series of bins—this is nearly the identical formulation
-to what we used in our \emph{expectation model} of average group opinion
+normal distribution over a series of ordinal values—this is nearly the identical
+formulation to what we used in our \emph{expectation model} of average group opinion
 measurements to calculate the ordinal probability density vector 
 (Equation~\ref{eq:ordinal-frequency-value}). The difference here is that
 the Bayesian Markov chain Monte Carlo (MCMC) methods \emph{infer} threshold values,

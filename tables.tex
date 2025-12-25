@@ -44,8 +44,10 @@
 %%%%%%%%%%%%%%%%%%%
 % TABLES OF VARIABLES IN METHOD
 \begin{table}[h]
-  \caption{\textbf{Latent psychological variables and distributions.}}
-  \label{tab:latent-variables}
+  \caption{
+    \label{tab:latent-variables}
+     \textbf{Latent psychological variables and distributions.}
+   }
   \begin{tabular}{cll} 
   \toprule
     \textbf{Variable} & \textbf{Description} & \textbf{Values} \\
@@ -95,3 +97,45 @@
   \bottomrule
   \end{tabular} 
 \end{table}
+
+
+\begin{table}[htp]
+
+    \caption{\textbf{Statistical Error Rates and Units of Analysis}}
+    \begin{center}	
+    
+    \begin{tabular}{llcp{2.15in}}
+      \toprule
+      %-----  
+      \textbf{Unit of Analysis} & \textbf{Type} & \textbf{Notation} & \textbf{Definition} \\
+      \midrule
+      %-----
+      Experiment, \(e\) 
+        & Type I & \(\alpha_e\) 
+        & Rate of false rejections of $e$'s null hypothesis \\
+
+      All experiments in one study, \(s\) 
+        & Family-Wise 
+        & \(\alpha_s\) 
+        & Mean Type I Error Rate across all conditions in study, $s$. \\
+
+      All experiments across studies & Family-Wise & \(\alpha_{\mathrm{All}}\) &
+        The mean Type I Error Rate for conditions with plausibly spurious results \\
+
+      %-----
+      \bottomrule
+    \end{tabular}
+
+    \end{center}
+    \label{tab:error-rate-outcomes}
+\end{table}%
+
+
+\begin{table}[ht]
+  \caption{{\textbf{Quantiles for the two error-rate measures under different
+  significance values.}}}
+  \label{tab:quantiles}
+  \centering
+  \input{tex/quantile_table_min_20_50_80_max.tex}
+\end{table}
+

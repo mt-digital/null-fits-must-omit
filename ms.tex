@@ -408,8 +408,7 @@ sustainable futures. We have a long way to go.
 A group polarization replication is proven undecidable, and therefore
 not truly a replication, if we can find a model of \emph{mere agreement}
 that appears to be polarized under that replication's experimental
-design. If we cannot find such a model, we cannot determine a
-replication to be undecidable. Mere agreement in this model is a dynamic
+design. Mere agreement in this model is a dynamic
 where agreement increases within the group, but extremism does not---in
 other words, A \emph{null-polarization distributions} is a set of two
 Gaussian distributions: one representing the pre-discussion opinions of
@@ -418,26 +417,6 @@ the group, and the other representing the post-discussion opinions. Our
 group finding \emph{mere agreement}, which is when the average group
 opinion is constant over time, but opinion variance decreases to
 represent agreement (or, equivalently, \emph{consensus}~\cite{DeGroot1974})).
-
-\subsection{Latent Opinion Model}\label{latent-opinion-model}
-
-Throughout this paper we model a participant $i$'s latent opinion at
-time $t$ as a normally-distributed random variable,
-
-\begin{equation}\phantomsection\label{eq:normal-opinion-distribution}
-{ 
-    \omega_{i,t} \sim
-    \mathcal{N}(\mu_t, \sigma_t),
-}
-\end{equation} 
-\noindent
-with mean $\mu_t$ and standard deviation $\sigma_t$.
-Group polarization in terms of latent opinions is then defined as any
-pair of pre- and post-discussion opinion distributions where the mean
-increases in magnitude over time---formally,
-$| \mu_\mathrm{post}| > | \mu_\mathrm{pre}|$. We need to take
-magnitudes since radicalization may be towards increasingly negative or
-positive opinion values.
 
 For group polarization experiments, only two times are relevant:
 \emph{pre-discussion}, $t=\mathrm{pre}$, and \emph{post-discussion},
@@ -448,6 +427,25 @@ of the latent opinion variance,
 $\sigma_\mathrm{pre}> \sigma_\mathrm{post}$---but only one study in
 our ten actually measured opinion variance to check this (Schkade,
 Sunstein, and Hastie 2010).
+
+\subsection{Latent Opinion Model}\label{latent-opinion-model}
+
+Throughout this paper we model a participant $i$'s latent opinion at
+time $t$ as a normally-distributed random variable,
+
+\begin{equation}
+  \omega_{i,t} \sim
+  \mathcal{N}(\mu_t, \sigma_t),
+\label{eq:normal-opinion-distribution}
+\end{equation} 
+\noindent
+with mean $\mu_t$ and standard deviation $\sigma_t$.
+Group polarization in terms of latent opinions is then defined as any
+pair of pre- and post-discussion opinion distributions where the mean
+increases in magnitude over time---formally,
+$| \mu_\mathrm{post}| > | \mu_\mathrm{pre}|$. We need to take
+magnitudes since radicalization may be towards increasingly negative or
+positive opinion values.
 
 A \emph{null-polarization model} is a model that is consistent with the
 \emph{negation}, or \emph{null}, of the \emph{group polarization
@@ -462,20 +460,22 @@ here. Mere agreement is a null-model because the mean latent opinion is
 set to be constant before and after discussion. We represent
 \emph{agreement}---or equivalently, \emph{consensus}---as a decrease in
 the standard deviation that defines the pre- and post-discussion latent
-opinion distributions. The mere agreement model is the cornerstone of
-our analysis, since it is empirically plausible and generates
+opinion distributions. 
+
+The mere agreement model is the cornerstone of
+our analysis: it is empirically plausible and generates
 \emph{spurious} observations of group polarization under mere agreement
-models, due to measurement artifacts induced by clipping all latent
+models, due to measurement artifacts induced by clipping latent
 opinion values outside the measurement range---we call this
 \emph{spurious polarization} for short. We simulate opinion measurements
 in two different ways, but both use the mere agreement model of latent
-opinions to test whether and by how much the measurement procedure
-distorts null-polarization to look like group polarization.
-
+opinions to test whether the measurement procedure
+distorts mere agreement so that it appears like group polarization.
 
 \begin{center}
 [  TABLE~\ref{tab:latent-variables} ABOUT HERE  ]
 \end{center}
+
 
 \subsection{Two Models of Group Polarization
 Measurement}\label{two-models-of-group-polarization-measurement}
@@ -483,9 +483,9 @@ Measurement}\label{two-models-of-group-polarization-measurement}
 We simulate measurement in two different ways---i.e., with two different
 models---for different parts of our analysis. The first is the
 \emph{expectation model}: an efficient way to \emph{simulate measurement
-of the observed average} opinion of a group, using the
+of the average} opinion of a group as the
 \emph{mathematical expectation value} of the distribution of measured
-opinions as a proxy. In the second model, the \emph{stochastic model},
+opinions. In the second model, the \emph{stochastic model},
 we simulate individual participant responses by first drawing an opinion
 for each participant from the latent opinion distribution
 (Equation~\ref{eq-random-variable-def}). The opinions are binned to the

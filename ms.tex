@@ -749,6 +749,10 @@ the spurious polarization.
 
 \end{figure}
 
+\begin{centering}
+[ FIGURE \ref{fig-computational-system} ABOUT HERE ]
+\end{centering}
+
 \subsubsection{System for identifying invalid
 replications}\label{system-for-identifying-invalid-replications}
 
@@ -796,9 +800,7 @@ actually a false positive, assuming the null model identified in the first part 
 the analysis. This is equivalent to the false positive rate of the
 experimental design, which we denote \(\alpha_e\) for experiment \(e\).
 Second, we would like to estimate the false discovery rate for our
-corpus, which is a good proxy for the field as a whole, since we
-selected top quality, highly influential work that has been cited
-thousands of times. The false discovery rate in this case tells us the
+corpus, which is a proxy for the group polarization research program in general, up to now. The false discovery rate in this case tells us the
 probability that a published detection of group polarization is actually
 a false detection. (Equation~\ref{eq-fdr}).
 
@@ -811,24 +813,22 @@ the general (summarized in Table \ref{tab:error-rate-outcomes}).
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  The Type I Error Rate (\(\alpha_e\)): The rate of falsely detecting
-  group polarization in a single experimental condition (\(e\)). This
-  directly quantifies the risk posed by the mere agreement model
-  identified for that specific experiment.
+  Type I Error Rate, $\alpha_e$: The rate of falsely detecting
+  group polarization in a single experimental condition, $e$. This
+  directly quantifies the chance that the mere agreement model
+  identified for that specific experiment will yield a false positive.
 \item
-  The study-level Family-Wise Error Rate (\(\alpha_s\)): The mean Type I
+  Family-Wise Error Rate for a study, $\alpha_s$: The mean Type I
   Error Rate aggregated across all conditions within a single study
   (\(s\)). This estimates the false claim rate across the set of tests
   performed in that study.
 \item
-  The Family-Wise Error Rate (\(\alpha_{\text{all}}\)): The mean Type I
-  Error Rate aggregated across all 57 experimental conditions in the
-  corpus (\(E\)). This estimates the expected false claim rate for a
-  researcher adopting the general experimental design found throughout
-  the literature.
+  The Family-Wise Error Rate, $\alpha_{\text{All}}$: The mean Type I
+  Error Rate aggregated across \emph{All} 57 experimental conditions in the
+  corpus. We use this to calculate the expected false detection rate for group polarization research in general.
 \end{enumerate}
 
-These calculated Type I Error Rates (\(\alpha\)) are then combined with
+These calculated Type I Error Rates are then combined with
 fixed external parameters to estimate the False Discovery Rate.
 Following convention, we adopt a fixed Statistical Power of \(W=0.80\)
 (and test sensitivity with alternative values) and a Base Rate of

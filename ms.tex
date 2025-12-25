@@ -489,28 +489,31 @@ opinions. In the second model, the \emph{stochastic model},
 we simulate individual participant responses by first drawing an opinion
 for each participant from the latent opinion distribution
 (Equation~\ref{eq-random-variable-def}). The opinions are binned to the
-appropriate ordinal value.
+appropriate ordinal value numerically to simulate real-world reporting and
+measurement of participant opinions.
 
 We use the expectation model for its efficiency in the first step of our
 analysis: to find a \emph{null-polarization model} that also fits the
-data for each experimental condition studied---if we find one that means
-we must retract this replication since this proves that the group
-polarization is undecidable with the data we have. Once we find any such
-undecidable results, we use the null-polarization model to help us
-further evaluate the experimental design itself.
+data for each experimental condition studied---if we find one that
+invalidates this replication since finding one means it is undecidable 
+if polarization occurred, given the data we have. Once we find any such
+undecidable results, we use the identified mere agreement model parameters to 
+simulate hypothetical experimental results using the \emph{stochastic model}.
 
 In the \emph{stochastic model}, we simulate group polarization data for
 the \emph{Evaluation} step of the analysis. We simulate experimental
-data, with the same number of participants as the original experiment,
-using the null-polarization model found in the \emph{Identification}
-step, if one was found.
-
+data with the same number of participants as the original experiment,
+using the mere agreement model found in the \emph{Identification}
+step, denoted $\nullmodel^e$ if one was found for experiment $e$.
 We \emph{evaluate} the experimental design, $e$, in terms of the false
-positive rate, also known as the Type I error rate or family-wise error
-rate, denoted $\alpha_e$. We close our analysis by demonstrating how
-our method can be inverted to \emph{specify} experimental designs in
-the pre-registration stage using our evaluation framework
-to avoid preventable replication failures like the ones we identify here.
+positive rate, also known as the Type I error rate, denoted $\alpha_e$. 
+
+We close our analysis by applying the stochastic model to \emph{specify} 
+experimental designs in the pre-registration stage using our evaluation
+framework. The result is we calculate what effect-detection threshold is
+required to achieve a user-specified target Type I error rate—for example,
+experimenters may want a false positive rate of less than one in twenty, so
+the target false positive rate would be  $\alpha^* = 0.05$.
 
 The measurement models are introduced in detail along with the
 corresponding stage of the analysis that uses them. First, the

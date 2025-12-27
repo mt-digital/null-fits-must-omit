@@ -815,7 +815,7 @@ here, and provided in the Supplement\footnote{Currently named
 Second, we used the application to find a mere agreement model where the simulated
 observed average pre- and post-discussion opinions match those reported for the
 experimental condition, $e$. Recall we denote such a model as $\nullmodel^e$
-(Equation~\ref{eq:nullmodel-tuple}. This works as follows: first, the user must enter an
+(Equation~\ref{eq:nullmodel-tuple}). This works as follows: first, the user must enter an
 initial guess, call it $\nullmodel$, of what latent mean and latent pre- and
 post-discussion standard deviations might look like group polarization under measurement
 artifacts. These initial guesses are used by a root-finding algorithm
@@ -826,35 +826,47 @@ steps, and therefore the reported group polarization as well
 
 The root-finding algorithm works to find $\nullmodel^e$ by first calculating
 the difference between the simulated expectation-model average opinion and the 
-published average opinion for a current candidate mere agreement model, $\nullmodel$: 
-$\Delta = \meanobs(\nullmodel) - \meanobsemp$ (Algorithm~\ref{algo:root-finding}). 
+published average opinion for a current candidate mere agreement model, $\nullmodel$,
+for the two time steps $t=\mathrm{pre}$ and $t=\mathrm{post}$: 
+$\Delta_t = \bar{o}_t(\nullmodel) - \meanobsemp_t$ (Algorithm~\ref{algo:root-finding}). 
 If $| \Delta | < \epsilon$, then we have found a mere agreement model that invalidates the
 replication in $e$, i.e., $\nullmodel^e = \nullmodel$. Otherwise, we need to try a
 different candidate mere agreement model, call it $\nullmodel'$. It is chosen by taking a
 random-valued step to change the standard deviation of either the pre-
-or post-discussion opinions. For example,  
-opinion standard deviation space: either., depending on the , For example, if we were searching for a
-$\sigmapre$ that generates the 
+or post-discussion opinions. For example, consider a step in the pre-discussion
+standard deviation value,
 \begin{equation}
-  \nullmodel' = \{\mu, \sigmapre
+  \delta' \sim \mathcal{N}(0, \delta)
 \end{equation}
 \noindent
+that gets added to the current standard deviation value, $\sigmapre$, to
+get an updated value, $\sigmapre'$:
+\begin{equation}
+  \sigma_t' = \sigma_t + \delta'.
+\end{equation}
+\noindent
+The algorithm then checks if $|\Delta_t'| < \epsilon$. If it is, then we can use our
+current mere agreement model guess as the invalidating model, i.e., 
+$\nullmodel^e = \nullmodel'$ invalidates the replication as before. If not,
+the process continues, with one final complication: if $|\Delta'_t| < |\Delta_t|$,
+for both $t$, then take the next step using $\nullmodel'$ as a base. If for
+one or both times we have $|\Delta_t'| \geq |\Delta_t|$, then use the 
+$\sigma_t$ from $\nullmodel$ for which $|\Delta_t| < |\Delta_t'|$ to either construct a
+hybrid $\nullmodel''$ with the two best-fitting $\sigma_t$ from the two
+previous candidate mere agreement models, $\nullmodel$ and $\nullmodel'$.
 
+If the process iterates like this for $i_\mathrm{max}$
+steps without finding a $\nullmodel^e$ that generates the reported 
+average opinions, the search is considered a failure: in other words, our method was
+not able to find a $\nullmodel^e$ that invalidates the replication.
+In some cases it took trying several initial $\nullmodel$ until one resulted in
+a successul search. 
 
-If the process iterates $i_\mathrm{max}$
-times without finding a $\sigma_t$ that generates the reported average opinion, the search
-is considered a failure. We experimented with plausible $\nullmodel$ guesses for each $e$
-until we found one that generated the associated reported group polarization. In 
-the cases where we could not find a plausible $\nullmodel^e$, that means we failed to 
-invalidate the replication in $e$. 
-
-When the user finds, or fails to find, a plausible mere agreement model to invalidate the
-replication in $e$, $\nullmodel^e$, the user then saves the results, which records several
-data and metadata fields. These fields are: $\nullmodel^e$ in terms of its $\mu$,
-$\sigmapre$, and $\sigmapost$; the stopping tolerance, $\epsilon$, to determine when the
-simulated observed average opinion matches the empirical one at time, $t$; and
-the size of the step the algorithm takes as it "walks" along different candidate 
-$\sigma_t$ values, denoted $\delta$. 
+When the user finds, or fails to find, a plausible mere agreement model to invalidate
+the replication in $e$, $\nullmodel^e$, the user then presses a button to save the
+results, This operation records several data and metadata fields: $\nullmodel^e$ in
+terms of its $\mu$, $\sigmapre$, and $\sigmapost$—or marked as a failed search; the
+stopping tolerance, $\epsilon$; and the mean step size, $\delta$. 
 
 \begin{algorithm}
   \caption{Routine to find latent mean and variance that generate spurious group polarization.}
@@ -1097,7 +1109,7 @@ the effect is accurately detected, $W$. Therefore the total probability of
 observing a positive effect is the sum of the probability of observing a false positive
 plus the probability of observing a true positive, i.e., $(1-b)\alpha + bW$.
 
-\subsection{Part 3: Specify Significance Threshold for Experimental Design}
+\subsection{Part 3: \emph{Specify} Significance Threshold for Experimental Design}
 
 In the final stage of our analysis, we pivot from evaluating the survey methods and
 outcomes of published designs to \emph{specifying} design requirements

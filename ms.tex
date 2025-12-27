@@ -99,7 +99,8 @@
 \newcommand{\thetafit}{\theta^\mathrm{fit}}
 \newcommand{\fdr}{\mathrm{FDR}}
 \newcommand{\meanobs}{\bar{o}}
-\newcommand{\meanobsemp}{\bar{\mathbf{o}}}
+% \newcommand{\meanobssim}{\meanobs^\mathrm{sim}}
+\newcommand{\meanobsemp}{\meanobs^\mathrm{emp}}
 \newcommand{\meanobst}{\meanobs_t}
 \newcommand{\meanobsjt}{\meanobs_{j,t}}
 \newcommand{\meanobspre}{\meanobs_\mathrm{pre}}
@@ -460,17 +461,26 @@ here. Mere agreement is a null-model because the mean latent opinion is
 set to be constant before and after discussion. We represent
 \emph{agreement}---or equivalently, \emph{consensus}---as a decrease in
 the standard deviation that defines the pre- and post-discussion latent
-opinion distributions. 
+opinion distributions. A mere agreement model, denoted $\nullmodel$, is
+defined by its mean, $\mu$—held constant—and pre- and post-discussion standard
+deviations written $\sigmapre$ and $\sigmapost$, respectively. We 
+can then represent mere agreement as a three-tuple:
+\begin{equation}
+  \nullmodel = (\mu, \sigmapre, \sigmapost).
+  \label{eq:nullmodel-tuple}
+\end{equation}
+\noindent
 
-The mere agreement model is the cornerstone of
-our analysis: it is empirically plausible and generates
-\emph{spurious} observations of group polarization under mere agreement
-models, due to measurement artifacts induced by clipping latent
-opinion values outside the measurement range---we call this
-\emph{spurious polarization} for short. We simulate opinion measurements
-in two different ways, but both use the mere agreement model of latent
-opinions to test whether the measurement procedure
-distorts mere agreement so that it appears like group polarization.
+If we find a mere agreement model that generates simulated observations
+matching the reported pre- and post-discussion average opinions, we call it
+$\nullmodel^e$: it is a mere agreement model that invalidates experiment
+$e$.  Finding $\nullmodel^e$ shows that the published observations could
+have been produced by mere agreement, distorted by measurement artifacts—an
+outcome that is mutually exclusive with group polarization.
+There may be more than one $\nullmodel^e$, but we need only to
+find one to invalidate a replaication since this establishes undecidability
+of the group polarization hypothesis.
+
 
 \begin{center}
 [  TABLE~\ref{tab:latent-variables} ABOUT HERE  ]
@@ -579,6 +589,7 @@ the ordinal survey measurement procedure induces a clipping artifact
 that hides changes in extreme opinions that fall outside the measurement
 scale.
 
+
 \subsubsection{The Expectation Model of Spurious Group
 Polarization}\label{the-expectation-model-of-spurious-group-polarization}
 
@@ -651,6 +662,7 @@ $\nullmodel = (\mu, \sigma_\mathrm{pre}, \sigma_\mathrm{post})$, under
 experimental design, $e$:
 \begin{equation}
   g(\nullmodel, e) = |\bar{o}_\mathrm{post}(\nullmodel, e)| - |\bar{o}_\mathrm{pre}(\nullmodel, e)|
+  \label{eq:spurious-group-polarization}
 \end{equation}
 
 In the \emph{Inspect} stage of our analysis we will determine which
@@ -664,7 +676,6 @@ in the original journal article \emph{and} check that simulated
 $\bar{o}_\mathrm{pre}$ and $\bar{o}_\mathrm{pre}$ match published
 values.
 
-
 \begin{center}
   [  TABLE~\ref{tab:experiment-parameters} ABOUT HERE  ]
 \end{center}
@@ -672,6 +683,7 @@ values.
 \begin{center}
   [  TABLE~\ref{tab:simulated-observations} ABOUT HERE  ]
 \end{center}
+
 
 \subsubsection{Example Invalidation of a Replication in Moscovici and Zavalloni
 (1969)}\label{subsubsec:example-invalidation}
@@ -782,18 +794,78 @@ find the null model specified in Equation~\ref{eq:Moscovici1969_Americans_Null}.
 % 
 %%%%%%
 
-To automate the analysis to be able to  we did manually for just one experimental condition in the example above. The foundation of this step is an algorithm that starts from an initial user-provided guess at a mere agreement model $\nullmodel$ that will generate spurious group polarization that matches the same average pre- and post-discussion opinions as reported in the original article.
+To analyze each experimental condition in our corpus, we developed a web
+application for data management and automated computational analysis. The web
+application handles several different data management and computational
+functions that need to work together to automate the process of
+\emph{identifying} which group polarization replications are invalid.
+The web application helps the researcher to ingest and analyze
+the data published in the original article to support each particular
+group polarization detection. 
+
+First, we used the web application for data entry: specifically, to transcribe
+the mean group opinion for pre- and post-discussion time steps, and any other
+data that are potentially relevant for deciding validity of replications,
+such as the opinion variance at each time step or details about the
+experimental procedure such as question wording. All transcriptions and 
+notes are available in the final dataset compiled using the system described
+here, and provided in the Supplement\footnote{Currently named
+\href{https://github.com/mt-digital/gp-statmod/blob/main/data/StudiesAnalysis.csv}{\texttt{StudiesAnalysis.csv}, available on GitHub \mt{TODO: and OSF}}}.
+
+Second, we used the application to find a mere agreement model where the simulated
+observed average pre- and post-discussion opinions match those reported for the
+experimental condition, $e$. Recall we denote such a model as $\nullmodel^e$
+(Equation~\ref{eq:nullmodel-tuple}. This works as follows: first, the user must enter an
+initial guess, call it $\nullmodel$, of what latent mean and latent pre- and
+post-discussion standard deviations might look like group polarization under measurement
+artifacts. These initial guesses are used by a root-finding algorithm
+(Algorithm~\ref{algo:root-finding}) that tries to find
+where the simulated average opinion matches the reported average opinion for both time
+steps, and therefore the reported group polarization as well
+(Equation~\ref{eq:spurious-group-polarization}). 
+
+The root-finding algorithm works to find $\nullmodel^e$ by first calculating
+the difference between the simulated expectation-model average opinion and the 
+published average opinion for a current candidate mere agreement model, $\nullmodel$: 
+$\Delta = \meanobs(\nullmodel) - \meanobsemp$ (Algorithm~\ref{algo:root-finding}). 
+If $| \Delta | < \epsilon$, then we have found a mere agreement model that invalidates the
+replication in $e$, i.e., $\nullmodel^e = \nullmodel$. Otherwise, we need to try a
+different candidate mere agreement model, call it $\nullmodel'$. It is chosen by taking a
+random-valued step to change the standard deviation of either the pre-
+or post-discussion opinions. For example,  
+opinion standard deviation space: either., depending on the , For example, if we were searching for a
+$\sigmapre$ that generates the 
+\begin{equation}
+  \nullmodel' = \{\mu, \sigmapre
+\end{equation}
+\noindent
+
+
+If the process iterates $i_\mathrm{max}$
+times without finding a $\sigma_t$ that generates the reported average opinion, the search
+is considered a failure. We experimented with plausible $\nullmodel$ guesses for each $e$
+until we found one that generated the associated reported group polarization. In 
+the cases where we could not find a plausible $\nullmodel^e$, that means we failed to 
+invalidate the replication in $e$. 
+
+When the user finds, or fails to find, a plausible mere agreement model to invalidate the
+replication in $e$, $\nullmodel^e$, the user then saves the results, which records several
+data and metadata fields. These fields are: $\nullmodel^e$ in terms of its $\mu$,
+$\sigmapre$, and $\sigmapost$; the stopping tolerance, $\epsilon$, to determine when the
+simulated observed average opinion matches the empirical one at time, $t$; and
+the size of the step the algorithm takes as it "walks" along different candidate 
+$\sigma_t$ values, denoted $\delta$. 
 
 \begin{algorithm}
   \caption{Routine to find latent mean and variance that generate spurious group polarization.}
-  \label{alg:hillclimbing}
+  \label{algo:root-finding}
   \begin{algorithmic}
 
     \Require $\mu$, $\sigma$, $\bar{\mathbf{o}}$ 
       \Comment{Set latent mean, guess variance that yields, input empirical mean.}
 
     \Require $\epsilon$, $\delta$, $i_\mathrm{max}$ 
-      \Comment{Hillclimbing tolerance, step size, and maximum iterations.}
+      \Comment{Rootfinding tolerance, step size, and maximum iterations.}
 
     \State $\Delta \gets \meanobs(\mu, \sigma) - \meanobsemp$ 
       \Comment{Initialize simulation error.}

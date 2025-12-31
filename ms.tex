@@ -1081,34 +1081,64 @@ will calculate what $d^*$ must be in order to limit
 $\alpha \leq 0.05$ as an example.
 
 
-\subsubsection{False discovery rate}\label{false-discovery-rate}
+\subsubsection{False Replication Rate}\label{false-discovery-rate}
 
-The false discovery rate is the false positive rate, scaled by the rate
-of true negative effects and normalized by the probability of detecting an effect,
-true or false (Equation~\ref{eq:fdr}).  
-The rate of true negative effects is the complement of thehttps://mt-digital.github.io/Quant-Social-Science-4-Sustainability/
-\emph{base rate of true effects}, $b$, i.e., the probability that an effect occurs
-in response to an experimental manipulation—of course this is only possible to know
-\emph{in silico}.  In our case, $b$ measures how frequently group discussion leads to
-polarization in identical experimental contexts, or at least sufficiently similar to
-warrant evaluating them together. The probability of detecting an effect, assuming one
-occured, is the \emph{power}, $W$. 
+% The false discovery rate is the false positive rate, scaled by the rate
+% of true negative effects and normalized by the probability of detecting an effect,
+% true or false (Equation~\ref{eq:fdr}).  
+% The rate of true negative effects is the complement of thehttps://mt-digital.github.io/Quant-Social-Science-4-Sustainability/
+% \emph{base rate of true effects}, $b$, i.e., the probability that an effect occurs
+% in response to an experimental manipulation—of course this is only possible to know
+% \emph{in silico}.  In our case, $b$ measures how frequently group discussion leads to
+% polarization in identical experimental contexts, or at least sufficiently similar to
+% warrant evaluating them together. The probability of detecting an effect, assuming one
+% occured, is the \emph{power}, $W$. 
 
-With this notation, the false detection rate is
-\begin{equation}
-  \mathrm{FDR}= \frac{(1 - b)\alpha}{(1 - b)\alpha + bW}.
-  \label{eq:fdr}
+Estimation of the \emph{false replication rate} (FRR)—the probability that a published 
+replication is, in fact, invalid—is the final step of the \emph{Evaluation} stage
+of our analysis\footnote{It is synonymous with the \emph{false discovery rate}
+which is used for metascience applications focused on discovery of new phenomena,
+or proving the efficacy of a newly discovered drug\mt{<- probably better for an
+Intro explanation to anticipate this and ignore it here—especially if this is
+published with Methods last}.}. 
+Formally it is the probability that a replication
+is both observed, an event denoted $R$, \emph{and} that the experimental treatment
+failed to induce an effect, denoted $\neg E$, read ``not $E$''—if the treatment
+induced an effect this is written $E$. Symbolically, using Bayes' Theorem to
+expand the conditional probability in terms of observable metascience variables,
+\begin{align}
+  \mathrm{FRR} & =  \Pr(\neg E | R) \notag \\
+               & =  \frac{\Pr(\neg E)\Pr(R|\neg E)}{\Pr(R)}.\label{eq:FRR-condprob-bayes}
+\end{align}
+
+In metascience, the \emph{base rate}, $b$, is the rate at which experimental
+designs induce a psychological \emph{effect}—in our notation, then, $\Pr(E) =
+b$ and $\Pr(\neg E) = 1 - b$. The probability that an invalid replication of
+a null effect is recorded is $\Pr(R | \neg E) = \alpha$, the false positive
+rate.  The marginal probability of a replication, valid or not, normalizes
+the numerator, where $\Pr(R) = \Pr(R| \neg E)\Pr(\neg E) + \Pr(R|E)\Pr(E)$.
+Our final metascience variable to fill in is the \emph{power} of the
+experimental design—i.e., the probability a design detects the psychological
+effects induced by the treatment, $W = \Pr(R|E)$.
+
+Plugging in to Equation~\ref{eq:FRR-condprob-bayes}, we get the false
+replication rate in terms interpretable metascience variables that we can
+estimate, \begin{equation}
+  \mathrm{FRR}= \frac{(1 - b)\alpha}{(1 - b)\alpha + bW}.
+  \label{eq:FRR-metascience}
 \end{equation}
 \noindent
-In the numerator, we have the product of the probability of a null effect—the 
-complement of the base rate, $1-b$—times the false positive rate, $\alpha$,
-the probability that a test will detect an effect when there was none.
-But we have to normalize this by summing over all detections of group polarization,
-including the valid ones: the fraction of results that validly detect an effect is the
-product of probability that an effect occurs, $b$, times the probability that
-the effect is accurately detected, $W$. Therefore the total probability of 
-observing a positive effect is the sum of the probability of observing a false positive
-plus the probability of observing a true positive, i.e., $(1-b)\alpha + bW$.
+We estimate $\alpha$ via simulation as described above; we use common
+estimates for the other two: $b=0.1$ and $W=0.8$. Other $b$ and $W$ 
+values can be tested using our open-source code as described in our
+codebase's online
+documentation\footnote{\url{https://mt-digital.github.io/gp-statmod/}}$^,
+$\footnote{\mt{In Discussion, remember to come back to this point, something
+  like:} $b$ may have to
+always be somewhat guessed at, but $W$ can also be simulated as we
+simulated $\alpha$—indeed, now that we have this technique, both $W$ and
+$\alpha$ should be calculated as part of a pre-registration checklist.}
+
 
 \subsection{Part 3: \emph{Specify} Significance Threshold for Experimental Design}
 
@@ -1128,7 +1158,7 @@ We leverage the evaluation framework developed in Part 2, based on the
 mere agreement null model $\nullmodel^e$ identified for each experimental
 condition $e$. Our objective is to find 
 \begin{equation}
-  d^*_e = \min~d,~~\text{subject to}
+  d^*_e = \min~d,~~\text{subject to }
     \Pr\!\left( \hat{d} \ge d \mid \nullmodel^e \right)  \le \alpha_\tau.
   \label{eq:threshold-spec}
 \end{equation}
